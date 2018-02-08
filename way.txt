@@ -1,0 +1,1 @@
+cd C:\Users\Ivan\AppData\Local\Programs\Python\Python36-32\StateExam-27.Solutions
