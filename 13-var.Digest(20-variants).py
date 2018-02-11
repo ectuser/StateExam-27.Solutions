@@ -1,39 +1,47 @@
 N = int(input())
-s = 15 #время между моментами
-minPr = 10000*10000+1 #мин пр-е
-minElem = 10000000 #минимальный эл без 15 посл
-min2 = 1000000 #мин эл %2 == 0
-minNot2 = 100000 #мин эл %2 != 0
-
+s = 15
+a = []
 '''
 Задача: найти минимальное четное произведение среди
 моментов, между которыми прошло 15 или более
 секунд
+
+-------------------------------------
+
+Произведение будет четным, если 
+1 из множителей четный
 '''
-a = []
+min2 = 1001
+min2OrNot2 = 1001
+minPr = 1001 * 1001
 for i in range(s):
 	a.append(int(input()))
-a.append(int(input()))
-for i in range(s+1,N):
-	elem = int(input())
-	if a[0] < minElem:
-		minElem = a[0]
-		#если первый элемент массива < мин эл
-		#без 15 посл
-	if a[0] % 2 == 0 and a[0] < min2:
+a.append(1001)
+for i in range(s,N):
+	a[s] = int(input()) #15-й элемент массива
+	if a[0] < min2 and a[0] % 2 == 0:
 		min2 = a[0]
-	if elem % 2 == 0:
-		pr = elem * minElem
-	elif min2 < 100000:
-		pr = elem * min2
-	else:
-		pr = 1000000
-	if pr < minPr:
-		minPr = pr
-	for i in range(1,s+1):
-		a[i-1] = a[i]
-	#a[s+1] = elem
-print(a)
-
-
-
+	if a[0] < min2OrNot2:
+		min2OrNot2 = a[0]
+	'''
+	Проверяем, является ли 0-й элемент
+	минимальным-четным или просто минимальным
+	'''
+	if a[s] % 2 == 0:
+		if a[s] * min2 < minPr:
+			minPr = a[s] * min2
+		if a[s] * min2OrNot2 < minPr:
+			minPr = a[s] * min2OrNot2
+	# если 15-й элемент четный, то не важно, какой
+	# первый элемент: четный или нечетный
+	elif a[s] * min2 < minPr:
+		minPr = a[s] * min2
+	# если 15-й элемент - четный, то 0-й эл тоже
+	# должен быть четным
+	for x in range(1,s+1):
+		a[x-1] = a[x]
+		# сдвиг массива
+if minPr == 1001*1001:
+	print(-1)
+else:
+	print(minPr)
